@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
+Route::get('/hallo', function () {
+    echo'hai saya dewan';
     return view('welcome');
 });
