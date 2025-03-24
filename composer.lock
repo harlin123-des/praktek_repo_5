@@ -3957,6 +3957,7 @@
         {
             "name": "openspout/openspout",
 
+
             "version": "v4.29.1",
             "source": {
                 "type": "git",
@@ -3968,6 +3969,7 @@
                 "url": "https://api.github.com/repos/openspout/openspout/zipball/ec83106bc3922fe94c9d37976ba6b7259511c4c5",
                 "reference": "ec83106bc3922fe94c9d37976ba6b7259511c4c5",
 
+
             "version": "v4.28.5",
             "source": {
                 "type": "git",
@@ -3978,6 +3980,7 @@
                 "type": "zip",
                 "url": "https://api.github.com/repos/openspout/openspout/zipball/ab05a09fe6fce57c90338f83280648a9786ce36b",
                 "reference": "ab05a09fe6fce57c90338f83280648a9786ce36b",
+
                 "shasum": ""
             },
             "require": {
@@ -3987,6 +3990,7 @@
                 "ext-libxml": "*",
                 "ext-xmlreader": "*",
                 "ext-zip": "*",
+
 
                 "php": "~8.3.0 || ~8.4.0"
             },
@@ -4000,6 +4004,8 @@
                 "phpstan/phpstan-strict-rules": "^2.0.3",
                 "phpunit/phpunit": "^12.0.7"
 
+
+
                 "php": "~8.2.0 || ~8.3.0 || ~8.4.0"
             },
             "require-dev": {
@@ -4011,7 +4017,6 @@
                 "phpstan/phpstan-phpunit": "^2.0.4",
                 "phpstan/phpstan-strict-rules": "^2",
                 "phpunit/phpunit": "^11.5.4"
-
             },
             "suggest": {
                 "ext-iconv": "To handle non UTF-8 CSV files (if \"php-mbstring\" is not already installed or is too limited)",
@@ -4062,6 +4067,9 @@
 
                 "source": "https://github.com/openspout/openspout/tree/v4.29.1"
 
+
+                "source": "https://github.com/openspout/openspout/tree/v4.29.1"
+
                 "source": "https://github.com/openspout/openspout/tree/v4.28.5"
 
             },
@@ -4078,7 +4086,11 @@
 
             "time": "2025-03-11T14:40:46+00:00"
 
+
+            "time": "2025-03-11T14:40:46+00:00"
+
             "time": "2025-01-30T13:51:11+00:00"
+
 
         },
         {
