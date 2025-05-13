@@ -1,0 +1,71 @@
+<?php
+
+namespace App\Filament\Resources\PenjualanResource\Pages;
+
+use App\Filament\Resources\PenjualanResource;
+use App\Models\Pembayaran;
+use App\Models\Penjualan;
+use Filament\Actions;
+use Filament\Notifications\Notification;
+use Filament\Resources\Pages\EditRecord;
+
+class EditPenjualan extends EditRecord
+{
+    protected static string $resource = PenjualanResource::class;
+
+    // protected function beforeSave(): void
+    // {
+    //     $this->record->status = $this->data['status']?? $this->record->status;
+    // }
+
+    protected function getFormActions(): array
+    {
+        return [
+            $this->getSaveFormAction(), // Tombol Save
+            $this->getCancelFormAction(), // Tombol Cancel
+
+            // Actions\DeleteAction::make(),
+            Actions\Action::make('bayar')
+            ->label('Bayar')
+            ->color('success')
+            ->action(fn () => $this->simpanPembayaran())
+            ->requiresConfirmation()
+            ->modalHeading('Konfirmasi Pembayaran')
+            ->modalDescription('Apakah Anda yakin ingin menyimpan pembayaran ini?')
+            ->modalButton('Ya, Bayar'),
+        ];
+    }
+     // tambahan untuk simpan
+    //  protected function getFormActions(): array
+    //  {
+    //      return [
+            
+    //      ];
+    //  }
+ 
+     // penanganan
+     protected function simpanPembayaran()
+     {
+         // $penjualan = $this->record; // Ambil data penjualan yang sedang dibuat
+         $penjualan = $this->record ?? Penjualan::latest()->first(); // Ambil penjualan terbaru jika null
+         // Simpan ke tabel pembayaran2
+         Pembayaran::create([
+             'penjualan_id' => $penjualan->id,
+             'tgl_bayar'    => now(),
+             'jenis_pembayaran' => 'tunai',
+             'transaction_time' => now(),
+             'gross_amount'       => $penjualan->tagihan, // Sesuaikan dengan field di tabel pembayaran
+             'order_id' => $penjualan->no_faktur,
+         ]);
+ 
+         // Update status penjualan jadi "dibayar"
+         $penjualan->update(['status' => 'bayar']);
+ 
+         // Notifikasi sukses
+         Notification::make()
+             ->title('Pembayaran Berhasil!')
+             ->success()
+             ->send();
+     }
+    
+}
