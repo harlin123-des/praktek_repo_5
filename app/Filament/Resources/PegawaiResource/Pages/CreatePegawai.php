@@ -5,12 +5,15 @@ namespace App\Filament\Resources\PegawaiResource\Pages;
 use App\Filament\Resources\PegawaiResource;
 use Filament\Actions;
 use Filament\Resources\Pages\CreateRecord;
+
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
+
 
 class CreatePegawai extends CreateRecord
 {
     protected static string $resource = PegawaiResource::class;
+
 
     protected function mutateFormDataBeforeCreate(array $data): array
     {
@@ -29,4 +32,5 @@ class CreatePegawai extends CreateRecord
 
         return $data;
     }
+
 }

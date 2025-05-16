@@ -3,14 +3,20 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\PegawaiResource\Pages;
+
+
 use App\Filament\Resources\PegawaiResource\RelationManagers;
+
 use App\Models\Pegawai;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
+
+
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+
 use Filament\Forms\Components\{TextInput, Select, DatePicker};
 use Filament\Tables\Columns\{TextColumn, BadgeColumn};
 
@@ -27,15 +33,22 @@ class PegawaiResource extends Resource
             ->schema([
                 TextInput::make('id')
                     ->label('ID Pegawai')
+
+                    ->default(fn() => Pegawai::generateKodePegawai()) // Panggil method static yang benar
+                    ->required()
+                    ->disabledOn('edit') // hanya isi saat create
+
                     ->default(fn() => Pegawai::getKodePegawai())
                     ->required()
                     ->disabledOn('edit')
+
                     ->placeholder('ID Pegawai akan diisi otomatis'),
 
                 TextInput::make('nama')
                     ->label('Nama Pegawai')
                     ->required()
                     ->placeholder('Masukkan nama pegawai'),
+
 
                 TextInput::make('email')
                     ->label('Email')
@@ -50,6 +63,7 @@ class PegawaiResource extends Resource
                     ->required()
                     ->placeholder('Masukkan password user')
                     ->visibleOn('create'),
+
 
                 Select::make('jenis_kelamin')
                     ->options([
@@ -91,6 +105,7 @@ class PegawaiResource extends Resource
                     ->required(),
             ]);
     }
+
     public static function table(Table $table): Table
     {
         return $table
@@ -134,18 +149,24 @@ class PegawaiResource extends Resource
                     ->sortable(),
             ])
 
+
             ->filters([
                 //
             ])
+
             ->actions([
                 Tables\Actions\EditAction::make(),
                 Tables\Actions\DeleteAction::make(),
                 Tables\Actions\ViewAction::make(),
             ])
             ->bulkActions([
+
+                Tables\Actions\DeleteBulkAction::make(),
+
                 Tables\Actions\BulkActionGroup::make([
                     Tables\Actions\DeleteBulkAction::make(),
                 ]),
+
             ]);
     }
 
