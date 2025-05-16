@@ -11,7 +11,11 @@ return new class extends Migration {
     public function up(): void
     {
         Schema::create('pegawais', function (Blueprint $table) {
+
+            $table->string('id', 10)->primary(); // id string 10 karakter
+
             $table->string('id')->primary();
+
             $table->string('nama');
             $table->enum('jenis_kelamin', ['Laki-laki', 'Perempuan']);
             $table->string('no_hp');
@@ -19,9 +23,17 @@ return new class extends Migration {
             $table->enum('shift', ['Pagi', 'Sore']);
             $table->date('tanggal_masuk');
             $table->enum('status_karyawan', ['Tetap', 'Kontrak']);
+
+            
+            $table->unsignedBigInteger('userId')->nullable()->index();
+            $table->foreign('userId')->references('id')->on('users')->onDelete('cascade');
+            
+            $table->timestamps();
+
             $table->unsignedBigInteger('userId');
             $table->foreign('userId')->references('id')->on('users')->onDelete('cascade');
             $table->timestamps(); // created_at dan updated_at
+
         });
     }
 
