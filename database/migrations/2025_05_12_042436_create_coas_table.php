@@ -11,11 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('kategori_produkzs', function (Blueprint $table) {
-            $table->id();
-            $table->string('nama_produk');
-            $table->string('harga_produk');
-            $table->integer('stok');
+        Schema::create('coa', function (Blueprint $table) {
+            $table->string('header_akun');
+            $table->string('kode_akun')->primary();
+            $table->string('nama_akun');
+            $table->boolean('posisi_debit')->default(false);
+            $table->boolean('posisi_kredit')->default(false);
             $table->timestamps();
         });
     }
@@ -25,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('kategori_produkzs');
+        Schema::dropIfExists('coa');
     }
 };

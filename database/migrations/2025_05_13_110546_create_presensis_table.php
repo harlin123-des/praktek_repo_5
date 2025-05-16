@@ -11,6 +11,7 @@ return new class extends Migration {
     public function up(): void
     {
         Schema::create('presensis', function (Blueprint $table) {
+
     $table->id();
     $table->foreignId('pegawai_id')->constrained()->onDelete('cascade');
     $table->date('tanggal');
@@ -20,6 +21,18 @@ return new class extends Migration {
     $table->string('keterangan')->nullable();
     $table->timestamps();
 });
+
+
+            $table->id();
+            $table->date('tanggal');
+            $table->time('jam_masuk')->nullable();
+            $table->time('jam_keluar')->nullable();
+            $table->enum('status', ['Hadir', 'Tidak Hadir'])->nullable();
+            $table->string('keterangan')->nullable();
+            $table->string('pegawai_id');
+            $table->foreign('pegawai_id')->references('id')->on('pegawais')->onDelete('cascade');
+            $table->timestamps();
+        });
 
     }
 

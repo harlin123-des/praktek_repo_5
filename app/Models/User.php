@@ -26,11 +26,18 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
+
     // app/Models/User.php
 
 public function pegawai()
 {
     return $this->hasOne(\App\Models\Pegawai::class, 'userId', 'id');
+
+    public function pegawai()
+    {
+        return $this->hasOne(Pegawai::class, 'userId');
+    }
+
 }
 
     }

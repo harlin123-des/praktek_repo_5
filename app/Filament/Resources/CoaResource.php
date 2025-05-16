@@ -2,11 +2,6 @@
 
 namespace App\Filament\Resources;
 
-use Filament\Forms\Components\TextInput; //kita menggunakan textinput
-use Filament\Forms\Components\Grid;
-
-use Filament\Tables\Columns\TextColumn;
-
 use App\Filament\Resources\CoaResource\Pages;
 use App\Filament\Resources\CoaResource\RelationManagers;
 use App\Models\Coa;
@@ -18,73 +13,42 @@ use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 
-
-
 class CoaResource extends Resource
 {
     protected static ?string $model = Coa::class;
-
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'heroicon-o-folder-open';
 
     public static function form(Form $form): Form
     {
-        return $form
-            ->schema([
-                Grid::make(1) // Membuat hanya 1 kolom
-                ->schema([
-                    TextInput::make('header_akun')
-                        ->required()
-                        ->placeholder('Masukkan header akun')
-                    ,
-                    TextInput::make('kode_akun')
-                        ->required()
-                        ->placeholder('Masukkan kode akun')
-                    ,
-                    TextInput::make('nama_akun')
-                        ->autocapitalize('words')
-                        ->label('Nama akun')
-                        ->required()
-                        ->placeholder('Masukkan nama akun')
-                    ,
-                ]),
-            ]);
+        return $form->schema([
+            Forms\Components\TextInput::make('kode_akun')
+                ->required()
+                ->unique()
+                ->label('Kode Akun'),
+
+            Forms\Components\TextInput::make('header_akun')
+                ->required(),
+
+            Forms\Components\TextInput::make('nama_akun')
+                ->required(),
+
+            Forms\Components\Toggle::make('posisi_debit')
+                ->label('Posisi Debit'),
+
+            Forms\Components\Toggle::make('posisi_kredit')
+                ->label('Posisi Kredit'),
+        ]);
     }
 
     public static function table(Table $table): Table
     {
-        return $table
-            ->columns([
-                TextColumn::make('header_akun'),
-                TextColumn::make('kode_akun'),
-                TextColumn::make('nama_akun'), 
-            ])
-            ->filters([
-                Tables\Filters\SelectFilter::make('header_akun')
-                    ->options([
-                        1 => 'Aset/Aktiva',
-                        2 => 'Utang',
-                        3 => 'Modal',
-                        4 => 'Pendapatan',
-                        5 => 'Beban',
-                    ]),
-            ])
-            ->actions([
-                Tables\Actions\ViewAction::make(),
-                Tables\Actions\EditAction::make(),
-                Tables\Actions\DeleteAction::make(),
-            ])
-            ->bulkActions([
-                Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
-                ]),
-            ]);
-    }
-
-    public static function getRelations(): array
-    {
-        return [
-            //
-        ];
+        return $table->columns([
+            Tables\Columns\TextColumn::make('kode_akun')->sortable()->searchable(),
+            Tables\Columns\TextColumn::make('header_akun'),
+            Tables\Columns\TextColumn::make('nama_akun'),
+            Tables\Columns\IconColumn::make('posisi_debit')->boolean(),
+            Tables\Columns\IconColumn::make('posisi_kredit')->boolean(),
+        ])->filters([]);
     }
 
     public static function getPages(): array

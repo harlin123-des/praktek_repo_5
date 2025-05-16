@@ -11,12 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('coas', function (Blueprint $table) {
-            $table->id();
-            $table->integer('header_akun');
-            $table->string('kode_akun',10);
-            $table->string('nama_akun');
-            $table->timestamps();
+        Schema::table('pembayaran', function (Blueprint $table) {
+            $table->timestamp('transaction_time')->nullable();
         });
     }
 
@@ -25,6 +21,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('coas');
+        Schema::table('pembayaran', function (Blueprint $table) {
+            //
+        });
     }
 };
