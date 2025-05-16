@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PembelianBahanBakuController;
+use App\Http\Controllers\InvoiceController;
 
 /*
 |--------------------------------------------------------------------------
@@ -15,15 +16,14 @@ use App\Http\Controllers\PembelianBahanBakuController;
 
 // Halaman utama (bisa diganti nanti kalau perlu dashboard)
 Route::get('/', function () {
-
-       return view('welcome');
- });
-Route::get('/hallo', function () {
-       echo 'hai saya nazwa';
-
-return view('welcome');
+    return view('welcome');
 });
 
+// Route testing hallo
+Route::get('/hallo', function () {
+    echo 'hai saya dewan';
+    return view('welcome');
+});
 
 // Menampilkan form pembelian (GET)
 Route::get('/pembelian', [PembelianBahanBakuController::class, 'create'])->name('pembelian.create');
@@ -31,10 +31,5 @@ Route::get('/pembelian', [PembelianBahanBakuController::class, 'create'])->name(
 // Menyimpan pembelian bahan baku (POST)
 Route::post('/pembelian', [PembelianBahanBakuController::class, 'store'])->name('pembelian.store');
 
-// Opsional: Jika kamu mau semua route pembelian (CRUD) sekaligus, gunakan resource
-// Route::resource('pembelian', PembelianBahanBakuController::class);
-
-Route::get('/hallo', function () {
-echo'hai saya dewan';
-
- });
+// Route untuk kirim email invoice
+Route::get('/test-email', [InvoiceController::class, 'sendInvoice']);
